@@ -19,7 +19,7 @@ public class LocationDetails implements Serializable {
     private String locationType;
 
     @SerializedName("woeid")
-    private Integer woeid;
+    private Long woeid;
 
     @SerializedName("latt_long")
     private String lattLong;
