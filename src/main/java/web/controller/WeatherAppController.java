@@ -1,6 +1,5 @@
 package web.controller;
 
-import com.google.gson.Gson;
 import data.model.StandardResponse;
 import data.model.StatusResponse;
 import data.model.WeatherAndCityDetails;
@@ -22,7 +21,7 @@ public class WeatherAppController {
                 String cityName = request.params(":city");
                 try {
                     Long woeid = weatherService.getWoeidForCity(cityName);
-                    response.redirect("consolidatedWeatherForCity/"+woeid);
+                    redirect.get(request.matchedPath(), "api/v1/consolidatedWeatherForCity/"+woeid);
                 }
                 catch (WeatherInfoSystemException exception){
                     log.info("Exception --> {}", exception.getMessage());
