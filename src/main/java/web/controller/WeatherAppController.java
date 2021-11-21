@@ -8,6 +8,7 @@ import service.WeatherService;
 import service.WeatherServiceImpl;
 import service.config.ObjectLoader;
 import service.exceptions.WeatherInfoSystemException;
+
 import static spark.Spark.*;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class WeatherAppController {
                 String cityName = request.params(":city");
                 try {
                     Long woeid = weatherService.getWoeidForCity(cityName);
-                    redirect.get(request.matchedPath(), "api/v1/consolidatedWeatherForCity/"+woeid);
+                    response.redirect("http://localhost:4567/api/v1/consolidatedWeatherForCity/"+woeid);
                 }
                 catch (WeatherInfoSystemException exception){
                     log.info("Exception --> {}", exception.getMessage());
@@ -31,6 +32,7 @@ public class WeatherAppController {
             });
 
             get("/consolidatedWeatherForCity/:woeid", (request, response) ->{
+                log.info("Received consolidated weather condition for city with woeid -->{}", request.params(":woeid"));
                 response.type("application/json");
                 Long woeid = Long.valueOf(request.params(":woeid"));
                 try{
